@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PB Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .card h2 {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            border-top: 3px solid #667eea;
+        }
+
+        .stat-box.completed {
+            border-top-color: #10b981;
+        }
+
+        .stat-box.remaining {
+            border-top-color: #f59e0b;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+
+        .legend-color.completed {
+            background-color: #10b981;
+        }
+
+        .legend-color.remaining {
+            background-color: #f59e0b;
+        }
+
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+        }
+
+        .error {
+            background-color: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 PB Dashboard</h1>
+            <p>PB Count by Month - Completed vs Remaining</p>
+        </div>
+
+        <div id="error-container"></div>
+
+        <div class="dashboard">
+            <div class="card">
+                <div class="stats" id="stats-container">
+                    <div class="loading">Loading data...</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>PB Count by Month</h2>
+                <div class="chart-container">
+                    <canvas id="pbChart"></canvas>
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color completed"></div>
+                        <span>Completed</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color remaining"></div>
+                        <span>Remaining</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
